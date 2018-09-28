@@ -1,21 +1,25 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
+import routes from './routes'
+import NotFount from './components/NotFound';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      <React.Fragment>
+        <CssBaseline />
+        <Router>
+          <Switch>
+            {routes.map((route, idx) => (
+              <Route key={idx} {...route} />
+            ))}
+            <Route key="Not Found" component={NotFount} />
+          </Switch>
+        </Router>
+      </React.Fragment>
+    )
   }
 }
-
-export default App;
+console.log(process.env);
+export default App
