@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import { Grid } from '@material-ui/core'
 
 import apiFetch from '../../api/fetch.js'
-import MovieList from '../../components/GridList.js';
+import MovieList from '../../components/GridList.js'
 
 const styles = {
   root: {
@@ -42,20 +39,11 @@ class Home extends Component {
     const { classes } = this.props
 
     return (
-      <div className={classes.root}>
-        <AppBar position="fixed" color="primary" className={classes.header}>
-          <Toolbar>
-            <Typography variant="title" color="inherit">
-              Top Movies
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <main>
-          <div className={classes.container}>
-            <Grid container spacing={24}>
-              <Grid item>
-                <MovieList movies={this.state.movies.results}/>
-                {/* <div>
+      <div className={classes.container}>
+        <Grid container spacing={24}>
+          <Grid item>
+            <MovieList movies={this.state.movies.results} />
+            {/* <div>
                   {Object.keys(this.state.movies).length
                     ? this.state.movies.results.map((movie, idx) => (
                         <div key={idx}>
@@ -76,10 +64,8 @@ class Home extends Component {
                       ))
                     : null}
                 </div> */}
-              </Grid>
-            </Grid>
-          </div>
-        </main>
+          </Grid>
+        </Grid>
       </div>
     )
   }
