@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import Layout from './views/Layout';
-import NotFount from './components/NotFound';
+import DefaultLayout from './views/Layout';
 
 class App extends Component {
   render() {
@@ -12,8 +11,7 @@ class App extends Component {
         <CssBaseline />
         <Router>
           <Switch>
-            <Route path="/" name="Home" component={Layout} />
-            <Route key="Not Found" component={NotFount} />
+            <Route path="/" name="Home" component={DefaultLayout} />
           </Switch>
         </Router>
       </React.Fragment>

@@ -1,12 +1,13 @@
 import React from 'react';
 import Loadable from 'react-loadable'
+import DefaultLayout from '../views/Layout';
 
 const Loading = () => <div>Loading...</div>
-
-const DefaulLayout = Loadable({
-  loader: () => import('../views/Layout'),
-  loading: Loading
-})
+// Loadable ta quenbrando na rota `/`
+// const DefaultLayout = Loadable({
+//   loader: () => import('../views/Layout.js'),
+//   loading: Loading
+// })
 
 const Home = Loadable({
   loader: () => import('../views/Home'),
@@ -18,7 +19,7 @@ export default [
     path: '/',
     exact: true,
     name: 'Home',
-    component: DefaulLayout
+    component: DefaultLayout
   },
   {
     path: '/home',

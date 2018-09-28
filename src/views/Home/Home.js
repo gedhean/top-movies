@@ -37,12 +37,13 @@ class Home extends Component {
   }
   render() {
     const { classes } = this.props
+    const { movies } = this.state
 
     return (
       <div className={classes.container}>
         <Grid container spacing={24}>
           <Grid item>
-            <MovieList movies={this.state.movies.results} />
+            <MovieList movies={movies.results} />
             {/* <div>
                   {Object.keys(this.state.movies).length
                     ? this.state.movies.results.map((movie, idx) => (

@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
+// import NotFount from '../components/NotFound';
 import routes from '../routes'
 
 const styles = {
@@ -32,10 +33,20 @@ class DefaultLayout extends Component {
         </AppBar>
         <main>
           <Switch>
-            {routes.map((route, idx) => (
-              <Route key={idx} {...route} />
-            ))}
+            {routes.map(
+              (route, idx) =>
+                route.component ? (
+                  <Route
+                    key={idx}
+                    exact={route.exact}
+                    path={route.path}
+                    name={route.name}
+                    component={route.component}
+                  />
+                ) : null
+            )}
             <Redirect from="/" to="/home" />
+            {/* <Route key="Not Found" component={NotFount} /> */}
           </Switch>
         </main>
       </div>
