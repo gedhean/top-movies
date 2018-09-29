@@ -1,12 +1,6 @@
 import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
-import {
-  Card,
-  CardMedia,
-  CardHeader,
-  CardContent,
-  Typography
-} from '@material-ui/core'
+import { Card, CardMedia, CardContent, Typography } from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import apiFetch from '../../api/fetch.js'
 import config from '../../config'
@@ -30,7 +24,7 @@ class Details extends Component {
   }
 
   render() {
-    const { classes, match } = this.props
+    const { classes } = this.props
     const { movie } = this.state
 
     return movie ? (

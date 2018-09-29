@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import GridList from '@material-ui/core/GridList'
-import IconButton from '@material-ui/core/IconButton'
 import { withStyles } from '@material-ui/core/styles'
-import GridListTile from '@material-ui/core/GridListTile'
-import StarBorderIcon from '@material-ui/icons/StarBorder'
-import GridListTileBar from '@material-ui/core/GridListTileBar'
-import { CircularProgress } from '@material-ui/core'
-import { Link } from 'react-router-dom'
-import config from '../config'
+// import IconButton from '@material-ui/core/IconButton'
+// import GridListTile from '@material-ui/core/GridListTile'
+// import StarBorderIcon from '@material-ui/icons/StarBorder'
+// import GridListTileBar from '@material-ui/core/GridListTileBar'
+// import { Link } from 'react-router-dom'
+// import config from '../config'
 import InfiniteScroller from 'react-infinite-scroller'
+import MovieListItem from './MovieListItem';
+import CircularLoading from '../components/CircularLoading.js';
 
 const styles = theme => ({
   root: {
@@ -35,12 +36,67 @@ const styles = theme => ({
   }
 })
 
+function AdvancedGridList(props) {
+  const { classes, movies, loadMoveis, hasMore } = props
+
+  return (
+    <div className={classes.root}>
+      {movies.length ? (
+        <InfiniteScroller
+          pageStart={1}
+          loadMore={loadMoveis}
+          hasMore={hasMore}
+          // useWindow={false}
+        >
+          <GridList cellHeight={200} spacing={2} className={classes.gridList}>
+            {movies.map(movie => (
+              <MovieListItem key={movie.id} movie={movie}/>
+              // {/* <GridListTile key={movie.id} cols={1}>
+              //   <img
+              //     src={`${config.api.backdrop_base_url(0)}/${
+              //       movie.backdrop_path
+              //     }`}
+              //     alt={
+              //       movie.name || movie.original_name || movie.original_title
+              //     }
+              //   />
+              //   <Link to={`/details/${movie.id}`}>
+              //     <GridListTileBar
+              //       title={
+              //         movie.name || movie.original_name || movie.original_title
+              //       }
+              //       titlePosition="bottom"
+              //       actionIcon={
+              //         <IconButton className={classes.icon}>
+              //           <StarBorderIcon />
+              //         </IconButton>
+              //       }
+              //       actionPosition="right"
+              //       className={classes.titleBar}
+              //     />
+              //   </Link>
+              // </GridListTile> */}
+            ))}
+          </GridList>
+        </InfiniteScroller>
+      ) : (
+        <CircularLoading size={20} color="secondary" />
+      )}
+    </div>
+  )
+}
+
+AdvancedGridList.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles)(AdvancedGridList)
+
+
 /**
  * The example data is structured as follows:
- *
- * import image from 'path/to/image.jpg';
   
-   const tileData = [
+   const movies = [
      {
      "adult": false,
      "backdrop_path": "/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg",
@@ -67,57 +123,3 @@ const styles = theme => ({
      },
    ];
  */
-function AdvancedGridList(props) {
-  const { classes, movies, loadMoveis, hasMore } = props
-
-  return (
-    <div className={classes.root}>
-      {movies.length ? (
-        <InfiniteScroller
-          pageStart={1}
-          loadMore={loadMoveis}
-          hasMore={hasMore}
-          // useWindow={false}
-        >
-          <GridList cellHeight={200} spacing={2} className={classes.gridList}>
-            {movies.map(movie => (
-              <GridListTile key={movie.id} cols={1}>
-                <img
-                  src={`${config.api.backdrop_base_url(0)}/${
-                    movie.backdrop_path
-                  }`}
-                  alt={
-                    movie.name || movie.original_name || movie.original_title
-                  }
-                />
-                <Link to={`/details/${movie.id}`}>
-                  <GridListTileBar
-                    title={
-                      movie.name || movie.original_name || movie.original_title
-                    }
-                    titlePosition="bottom"
-                    actionIcon={
-                      <IconButton className={classes.icon}>
-                        <StarBorderIcon />
-                      </IconButton>
-                    }
-                    actionPosition="right"
-                    className={classes.titleBar}
-                  />
-                </Link>
-              </GridListTile>
-            ))}
-          </GridList>
-        </InfiniteScroller>
-      ) : (
-        <CircularProgress size={20} color="secondary" />
-      )}
-    </div>
-  )
-}
-
-AdvancedGridList.propTypes = {
-  classes: PropTypes.object.isRequired
-}
-
-export default withStyles(styles)(AdvancedGridList)
