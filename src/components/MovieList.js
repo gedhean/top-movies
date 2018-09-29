@@ -6,9 +6,10 @@ import { withStyles } from '@material-ui/core/styles'
 import GridListTile from '@material-ui/core/GridListTile'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import GridListTileBar from '@material-ui/core/GridListTileBar'
+import { CircularProgress } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import config from '../config'
-import { CircularProgress } from '@material-ui/core'
+import InfiniteScroller from 'react-infinite-scroller'
 
 const styles = theme => ({
   root: {
@@ -20,7 +21,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3
   },
   gridList: {
-    width: 780,
+    maxWidth: 780,
     height: 'auto',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)'
@@ -67,41 +68,50 @@ const styles = theme => ({
    ];
  */
 function AdvancedGridList(props) {
-  const { classes, movies } = props
+  const { classes, movies, loadMoveis, hasMore } = props
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={200} spacing={2} className={classes.gridList}>
-        {movies ? (
-          movies.map(movie => (
-            <GridListTile key={movie.id} cols={1} rows={1}>
-              <img
-                src={`${config.api.base_url}/${config.api.backdrop_size[0]}/${
-                  movie.backdrop_path
-                }`}
-                alt={movie.name || movie.original_name || movie.original_title}
-              />
-              <Link to={`/details/${movie.id}`}>
-                <GridListTileBar
-                  title={
+      {movies.length ? (
+        <InfiniteScroller
+          pageStart={1}
+          loadMore={loadMoveis}
+          hasMore={hasMore}
+          // useWindow={false}
+        >
+          <GridList cellHeight={200} spacing={2} className={classes.gridList}>
+            {movies.map(movie => (
+              <GridListTile key={movie.id} cols={1}>
+                <img
+                  src={`${config.api.backdrop_base_url(0)}/${
+                    movie.backdrop_path
+                  }`}
+                  alt={
                     movie.name || movie.original_name || movie.original_title
                   }
-                  titlePosition="bottom"
-                  actionIcon={
-                    <IconButton className={classes.icon}>
-                      <StarBorderIcon />
-                    </IconButton>
-                  }
-                  actionPosition="right"
-                  className={classes.titleBar}
                 />
-              </Link>
-            </GridListTile>
-          ))
-        ) : (
-          <CircularProgress size={50} color="secondary"/>
-        )}
-      </GridList>
+                <Link to={`/details/${movie.id}`}>
+                  <GridListTileBar
+                    title={
+                      movie.name || movie.original_name || movie.original_title
+                    }
+                    titlePosition="bottom"
+                    actionIcon={
+                      <IconButton className={classes.icon}>
+                        <StarBorderIcon />
+                      </IconButton>
+                    }
+                    actionPosition="right"
+                    className={classes.titleBar}
+                  />
+                </Link>
+              </GridListTile>
+            ))}
+          </GridList>
+        </InfiniteScroller>
+      ) : (
+        <CircularProgress size={20} color="secondary" />
+      )}
     </div>
   )
 }

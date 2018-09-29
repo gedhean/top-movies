@@ -7,7 +7,7 @@ import {
   CardContent,
   Typography
 } from '@material-ui/core'
-import LinearProgress from '@material-ui/core/LinearProgress';
+import LinearProgress from '@material-ui/core/LinearProgress'
 import apiFetch from '../../api/fetch.js'
 import config from '../../config'
 
@@ -38,9 +38,7 @@ class Details extends Component {
         <Card>
           <CardMedia
             component="img"
-            image={`${config.api.base_url}/${config.api.backdrop_size[1]}/${
-              movie.backdrop_path
-            }`}
+            image={`${config.api.backdrop_base_url(1)}/${movie.backdrop_path}`}
           />
           <CardContent>
             <Typography gutterBottom variant="headline" component="h2">
@@ -53,7 +51,7 @@ class Details extends Component {
         </Card>
       </div>
     ) : (
-      <LinearProgress color="secondary"/>
+      <LinearProgress color="secondary" />
     )
   }
 }
