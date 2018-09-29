@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
 import GridList from '@material-ui/core/GridList'
-import GridListTile from '@material-ui/core/GridListTile'
-import GridListTileBar from '@material-ui/core/GridListTileBar'
 import IconButton from '@material-ui/core/IconButton'
+import { withStyles } from '@material-ui/core/styles'
+import GridListTile from '@material-ui/core/GridListTile'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
-
+import GridListTileBar from '@material-ui/core/GridListTileBar'
+import { Link } from 'react-router-dom'
 import config from '../config'
 
 const styles = theme => ({
@@ -75,21 +75,26 @@ function AdvancedGridList(props) {
           movies.map(movie => (
             <GridListTile key={movie.id} cols={1} rows={1}>
               <img
-                src={`${config.api.base_url}/${config.api.backdrop_size}/${movie.backdrop_path}`}
+                src={`${config.api.base_url}/${config.api.backdrop_size}/${
+                  movie.backdrop_path
+                }`}
                 alt={movie.name || movie.original_name || movie.original_title}
               />
-              />
-              <GridListTileBar
-                title={movie.name || movie.original_name || movie.original_title}
-                titlePosition="bottom"
-                actionIcon={
-                  <IconButton className={classes.icon}>
-                    <StarBorderIcon />
-                  </IconButton>
-                }
-                actionPosition="left"
-                className={classes.titleBar}
-              />
+              <Link to="/details">
+                <GridListTileBar
+                  title={
+                    movie.name || movie.original_name || movie.original_title
+                  }
+                  titlePosition="bottom"
+                  actionIcon={
+                    <IconButton className={classes.icon}>
+                      <StarBorderIcon />
+                    </IconButton>
+                  }
+                  actionPosition="right"
+                  className={classes.titleBar}
+                />
+              </Link>
             </GridListTile>
           ))
         ) : (

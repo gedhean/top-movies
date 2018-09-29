@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
 
 import apiFetch from '../../api/fetch.js'
-import MovieList from '../../components/GridList.js'
+import MovieList from '../../components/MovieList.js'
 
 const styles = {
   root: {
@@ -44,27 +44,6 @@ class Home extends Component {
         <Grid container spacing={24}>
           <Grid item>
             <MovieList movies={movies.results} />
-            {/* <div>
-                  {Object.keys(this.state.movies).length
-                    ? this.state.movies.results.map((movie, idx) => (
-                        <div key={idx}>
-                          <div>{movie.original_title}</div>
-                          <img
-                            src={`${config.api.base_url}/${config.api.poster_size}/${
-                              movie.poster_path
-                            }`}
-                            alt="Film poster"
-                          />
-                          <img
-                            src={`${config.api.base_url}/${config.api.backdrop_size}/${
-                              movie.backdrop_path
-                            }`}
-                            alt="Film poster"
-                          />
-                        </div>
-                      ))
-                    : null}
-                </div> */}
           </Grid>
         </Grid>
       </div>
