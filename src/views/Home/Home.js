@@ -12,11 +12,7 @@ const styles = {
   },
   container: {
     margin: '0px auto',
-    paddingTop: '60px',
     width: '720px'
-  },
-  header: {
-    height: '60px'
   }
 }
 

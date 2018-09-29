@@ -8,6 +8,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder'
 import GridListTileBar from '@material-ui/core/GridListTileBar'
 import { Link } from 'react-router-dom'
 import config from '../config'
+import { CircularProgress } from '@material-ui/core'
 
 const styles = theme => ({
   root: {
@@ -75,12 +76,12 @@ function AdvancedGridList(props) {
           movies.map(movie => (
             <GridListTile key={movie.id} cols={1} rows={1}>
               <img
-                src={`${config.api.base_url}/${config.api.backdrop_size}/${
+                src={`${config.api.base_url}/${config.api.backdrop_size[0]}/${
                   movie.backdrop_path
                 }`}
                 alt={movie.name || movie.original_name || movie.original_title}
               />
-              <Link to="/details">
+              <Link to={`/details/${movie.id}`}>
                 <GridListTileBar
                   title={
                     movie.name || movie.original_name || movie.original_title
@@ -98,7 +99,7 @@ function AdvancedGridList(props) {
             </GridListTile>
           ))
         ) : (
-          <div>Loading...</div>
+          <CircularProgress size={50} color="secondary"/>
         )}
       </GridList>
     </div>

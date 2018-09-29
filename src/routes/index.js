@@ -1,8 +1,10 @@
-import React from 'react';
+import React from 'react'
 import Loadable from 'react-loadable'
-import DefaultLayout from '../views/Layout';
+import DefaultLayout from '../views/Layout'
+import Details from '../views/Details'
+import { LinearProgress } from '@material-ui/core'
 
-const Loading = () => <div>Loading...</div>
+const Loading = () => <LinearProgress color="secondary"/>
 // Loadable ta quenbrando na rota `/`
 // const DefaultLayout = Loadable({
 //   loader: () => import('../views/Layout.js'),
@@ -13,6 +15,11 @@ const Home = Loadable({
   loader: () => import('../views/Home'),
   loading: Loading
 })
+
+// const Details = Loadable({
+//   loader: () => import('../views/Details'),
+//   loading: Loading
+// })
 
 export default [
   {
@@ -26,5 +33,11 @@ export default [
     exact: false,
     name: 'Top Movies',
     component: Home
+  },
+  {
+    path: '/details/:id',
+    exact: false,
+    name: 'Movie Details',
+    component: Details
   }
 ]
