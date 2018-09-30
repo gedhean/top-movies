@@ -11,8 +11,8 @@ import { Link } from 'react-router-dom'
 import config from '../config'
 import { Tooltip } from '@material-ui/core'
 import PreloadImage from '../components/PreloadImage.js'
-import placeholderImg from '../assets/img/movie-place.png';
-import MoviePopularity from '../components/MoviePopularity';
+import placeholderImg from '../assets/img/movie-place.png'
+import MoviePopularity from '../components/MoviePopularity'
 
 const styles = theme => ({
   root: {
@@ -57,7 +57,7 @@ function MovieListItem(props) {
               <Typography gutterBottom variant="headline" component="h2">
                 {movie.title || movie.original_title || movie.originnal_name || movie.name}
               </Typography>
-              <MoviePopularity popularity={movie.popularity} votes={movie.vote_average}/>
+              <MoviePopularity popularity={movie.popularity} votes={movie.vote_average} />
               {extraInfo ? (
                 <Fragment>
                   <Typography
@@ -68,13 +68,40 @@ function MovieListItem(props) {
                   >
                     {movie.overview}
                   </Typography>
-                  <Typography color="textSecondary">Release: {movie.release_date || "Unknown"}</Typography>
+                  <Typography color="textSecondary">
+                    Release: {movie.release_date || 'Unknown'}
+                  </Typography>
                 </Fragment>
               ) : null}
             </Grid>
           </Grid>
           <Grid item>
-            <IconButton>
+            <IconButton
+              onClick={() => {
+                fetch(
+                  `https://api.themoviedb.org/3/account/{account_id}/favorite?api_key=99aed081ec73c95f4ad0fde1442f054f&session_id=${window.localStorage.getItem(
+                    'session_id'
+                  )}`,
+                  {
+                    headers: {
+                      'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    method: 'post',
+                    body: JSON.stringify({
+                      media_type: 'movie',
+                      media_id: movie.id,
+                      favorite: true
+                    })
+                  }
+                )
+                  .then(res => res.json())
+                  .then(data => {
+                    console.log(data)
+                    // TODO: implementar lógica para indicar que o filme foi favoritado
+                  })
+                  .catch(err => console.log(err))
+              }}
+            >
               <Tooltip title="Favorite" placement="top-start">
                 <StarBorderIcon style={{ fontSize: 16 }} />
               </Tooltip>

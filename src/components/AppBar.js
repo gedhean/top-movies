@@ -13,6 +13,9 @@ import ButtonBase from '@material-ui/core/ButtonBase'
 import { Link, withRouter } from 'react-router-dom'
 import { Hidden } from '@material-ui/core'
 
+// import { auth } from '../firebase/init'
+import { auth } from '../api/fetch';
+
 const styles = theme => ({
   root: {
     width: '100%'
@@ -70,7 +73,8 @@ const styles = theme => ({
         width: 200
       }
     }
-  }
+  },
+  login: { padding: theme.spacing.unit, marginLeft: theme.spacing.unit * 2 }
 })
 
 function debounce(func, wait, immediate) {
@@ -93,12 +97,12 @@ class SearchAppBar extends Component {
   state = {
     searchQuery: ''
   }
-  
+
   handleSearch = event => {
     event.persist()
     event.preventDefault()
     this.props.history.push(`/search/${this.state.searchQuery}`)
-    this.setState({searchQuery: ''})
+    this.setState({ searchQuery: '' })
   }
 
   handleChange = event => {
@@ -146,6 +150,9 @@ class SearchAppBar extends Component {
                   }}
                 />
               </form>
+            </div>
+            <div className={classes.login}>
+              <ButtonBase onClick={auth}>LOGIN</ButtonBase>
             </div>
           </Toolbar>
         </AppBar>
