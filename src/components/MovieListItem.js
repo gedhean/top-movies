@@ -10,6 +10,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder'
 import { Link } from 'react-router-dom'
 import config from '../config'
 import { Tooltip } from '@material-ui/core'
+import PreloadImage from '../components/PreloadImage.js'
 
 const styles = theme => ({
   root: {
@@ -18,14 +19,17 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2
   },
   image: {
-    width: 150,
-    height: 230
+    width: 133,
+    height: 200
   },
   img: {
     margin: 'auto',
     display: 'block',
     maxWidth: '100%',
-    maxHeight: '100%'
+    maxHeight: '100%',
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#666'
   }
 })
 
@@ -35,15 +39,13 @@ function MovieListItem(props) {
     <Paper className={classes.root}>
       <Grid container spacing={16}>
         <Grid item>
-          <ButtonBase
-            to={`/details/${movie.id}`}
-            className={classes.image}
-            component={Link}
-          >
-            <img
+          <ButtonBase to={`/details/${movie.id}`} className={classes.image} component={Link}>
+            <PreloadImage
               className={classes.img}
-              alt="complex"
               src={`${config.api.post_base_url(1)}/${movie.poster_path}`}
+              alt={movie.title}
+              duration="100ms"
+              lazy
             />
           </ButtonBase>
         </Grid>
@@ -53,18 +55,12 @@ function MovieListItem(props) {
               <Typography gutterBottom variant="headline" component="h2">
                 {movie.title || movie.original_title || movie.originnal_name || movie.name}
               </Typography>
-              <Typography color="textPrimary">
-                Popularity: {movie.popularity}
-              </Typography>
+              <Typography color="textPrimary">Popularity: {movie.popularity}</Typography>
               {/* <Typography gutterBottom variant="body1" component="p">
                 {movie.overview}
               </Typography> */}
-              <Typography color="textSecondary">
-                Vote agerage: {movie.vote_average}
-              </Typography>
-              <Typography color="textSecondary">
-                Release: {movie.release_date}
-              </Typography>
+              <Typography color="textSecondary">Vote agerage: {movie.vote_average}</Typography>
+              <Typography color="textSecondary">Release: {movie.release_date}</Typography>
             </Grid>
             {/* <Grid item>
               <Typography style={{ cursor: 'pointer' }}>Remove</Typography>
@@ -78,9 +74,7 @@ function MovieListItem(props) {
           <Grid item>
             <IconButton>
               <Tooltip title="Favorite" placement="top-start">
-                <StarBorderIcon
-                  style={{ fontSize: 16 }}
-                />
+                <StarBorderIcon style={{ fontSize: 16 }} />
               </Tooltip>
             </IconButton>
           </Grid>

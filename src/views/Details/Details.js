@@ -35,7 +35,7 @@ class Details extends Component {
     const { classes } = this.props
     const { movie } = this.state
 
-    // API failed
+    // API failed to found resource
     if (this.state.error) {
       return (
         <ResourceNotFound info={this.state.error}/>
