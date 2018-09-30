@@ -1,25 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
-import { Switch, Route, Redirect, Link } from 'react-router-dom'
-
-import ButtonBase from '@material-ui/core/ButtonBase'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 // import NotFount from '../components/NotFound';
 import routes from '../routes'
-
+import AppBar from '../components/AppBar.js';
 const styles = {
   root: {
     flexGrow: 1
   },
-  header: {
-    height: '60px'
-  },
   main: {
-    marginTop: '60px'
+    marginTop: '48px'
   }
 }
 
@@ -29,15 +21,7 @@ class DefaultLayout extends Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="fixed" color="primary" className={classes.header}>
-          <Toolbar>
-            <ButtonBase component={Link} to="/">
-              <Typography variant="title" color="inherit">
-                Top Movies
-              </Typography>
-            </ButtonBase>
-          </Toolbar>
-        </AppBar>
+        <AppBar />
         <main className={classes.main}>
           <Switch>
             {routes.map(

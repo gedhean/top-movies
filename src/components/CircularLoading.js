@@ -4,7 +4,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const styles = {
     display: 'flex',
     justifyContent: 'center',
-    width: '100%'
+    width: '100%',
+    margin: '24px 0px',
+    textAlign: 'center'
 }
 
 const CircularLoading = (props) => {

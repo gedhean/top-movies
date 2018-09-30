@@ -36,7 +36,7 @@ class Details extends Component {
           />
           <CardContent>
             <Typography gutterBottom variant="headline" component="h2">
-              {movie.title || movie.original_title || movie.original_name}
+              {movie.title || movie.original_title || movie.original_name || movie.name}
             </Typography>
             <Typography component="p" variant="body1">
               {movie.overview}

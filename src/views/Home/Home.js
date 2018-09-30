@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
 import { getMovies } from '../../api/fetch.js'
-import apiFetch from '../../api/fetch.js'
+// import apiFetch from '../../api/fetch.js'
 import MovieList from '../../components/MovieList.js'
 
 const styles = {
@@ -12,7 +12,7 @@ const styles = {
   },
   container: {
     margin: '0px auto',
-    maxWidth: '720px'
+    maxWidth: '565px'
   }
 }
 
@@ -25,14 +25,14 @@ class Home extends Component {
 
   componentDidMount() {
     this.loadMoveis(1)
-    apiFetch('configuration').then(data => {
-      console.log(data)
-      this.setState({ config: data })
-    })
+    // apiFetch('configuration').then(data => {
+    //   console.log(data)
+    //   this.setState({ config: data })
+    // })
   }
 
   loadMoveis = page => {
-    console.log('page:', page);
+    console.log('page:', page)
     getMovies('trending/all/day', page).then(data => {
       console.log(data)
       this.setState(prevState => ({
@@ -50,15 +50,7 @@ class Home extends Component {
 
     return (
       <div className={classes.container}>
-        <Grid container spacing={8}>
-          <Grid item >
-            <MovieList
-              movies={movies}
-              loadMoveis={this.loadMoveis}
-              hasMore={hasMore}
-            />
-          </Grid>
-        </Grid>
+        <MovieList movies={movies} loadMore={this.loadMoveis} hasMore={hasMore} />
       </div>
     )
   }

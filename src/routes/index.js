@@ -3,6 +3,7 @@ import Loadable from 'react-loadable'
 import DefaultLayout from '../views/Layout'
 import Details from '../views/Details'
 import { LinearProgress } from '@material-ui/core'
+import SearchConainer from '../containers/SearchConainer';
 
 const Loading = () => <LinearProgress color="secondary"/>
 // Loadable ta quenbrando na rota `/`
@@ -39,5 +40,11 @@ export default [
     exact: false,
     name: 'Movie Details',
     component: Details
+  },
+  {
+    path: '/search/:query',
+    exact: false,
+    name: 'Search',
+    component: SearchConainer
   }
 ]

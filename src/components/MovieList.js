@@ -2,15 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import GridList from '@material-ui/core/GridList'
 import { withStyles } from '@material-ui/core/styles'
-// import IconButton from '@material-ui/core/IconButton'
-// import GridListTile from '@material-ui/core/GridListTile'
-// import StarBorderIcon from '@material-ui/icons/StarBorder'
-// import GridListTileBar from '@material-ui/core/GridListTileBar'
-// import { Link } from 'react-router-dom'
-// import config from '../config'
 import InfiniteScroller from 'react-infinite-scroller'
-import MovieListItem from './MovieListItem';
-import CircularLoading from '../components/CircularLoading.js';
+
+import CircularLoading from '../components/CircularLoading.js'
+import MovieListItem from './MovieListItem'
 
 const styles = theme => ({
   root: {
@@ -22,7 +17,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3
   },
   gridList: {
-    maxWidth: 780,
+    maxWidth: 565,
     height: 'auto',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)'
@@ -37,61 +32,38 @@ const styles = theme => ({
 })
 
 function AdvancedGridList(props) {
-  const { classes, movies, loadMoveis, hasMore } = props
+  const { classes, movies, loadMore, hasMore } = props
 
   return (
     <div className={classes.root}>
       {movies.length ? (
         <InfiniteScroller
           pageStart={1}
-          loadMore={loadMoveis}
+          loadMore={loadMore}
           hasMore={hasMore}
           // useWindow={false}
         >
           <GridList cellHeight={200} spacing={2} className={classes.gridList}>
             {movies.map(movie => (
-              <MovieListItem key={movie.id} movie={movie}/>
-              // {/* <GridListTile key={movie.id} cols={1}>
-              //   <img
-              //     src={`${config.api.backdrop_base_url(0)}/${
-              //       movie.backdrop_path
-              //     }`}
-              //     alt={
-              //       movie.name || movie.original_name || movie.original_title
-              //     }
-              //   />
-              //   <Link to={`/details/${movie.id}`}>
-              //     <GridListTileBar
-              //       title={
-              //         movie.name || movie.original_name || movie.original_title
-              //       }
-              //       titlePosition="bottom"
-              //       actionIcon={
-              //         <IconButton className={classes.icon}>
-              //           <StarBorderIcon />
-              //         </IconButton>
-              //       }
-              //       actionPosition="right"
-              //       className={classes.titleBar}
-              //     />
-              //   </Link>
-              // </GridListTile> */}
+              <MovieListItem key={movie.id} movie={movie} />
             ))}
           </GridList>
         </InfiniteScroller>
       ) : (
-        <CircularLoading size={20} color="secondary" />
+        <CircularLoading size={50} color="secondary" />
       )}
     </div>
   )
 }
 
 AdvancedGridList.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  movies: PropTypes.array.isRequired,
+  loadMore: PropTypes.func.isRequired,
+  hasMore: PropTypes.bool.isRequired
 }
 
 export default withStyles(styles)(AdvancedGridList)
-
 
 /**
  * The example data is structured as follows:

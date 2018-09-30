@@ -51,7 +51,7 @@ function MovieListItem(props) {
           <Grid item xs container direction="column" spacing={16}>
             <Grid item xs>
               <Typography gutterBottom variant="headline" component="h2">
-                {movie.title || movie.original_title || movie.originnal_name}
+                {movie.title || movie.original_title || movie.originnal_name || movie.name}
               </Typography>
               <Typography gutterBottom variant="body1" component="p">
                 {movie.overview}
