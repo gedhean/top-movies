@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { searchMulti } from '../api/fetch.js'
 import MovieList from '../components/MovieList'
 import CircularLoading from '../components/CircularLoading.js'
-import NoContent from '../components/NoContent.js'
+import ResourceNotFound from '../components/ResourceNotFound.js';
 
 class SearchConainer extends Component {
   state = {
@@ -30,13 +30,14 @@ class SearchConainer extends Component {
         console.log(data)
       })
       .catch(err => {
+        this.setState({ error: 'Resource could not be found. Sorry.' })
         console.log('Search erro:', err)
       })
   }
 
   render() {
     if (this.state.noResults) {
-      return <NoContent />
+      return <ResourceNotFound info={this.state.error || "No results"} />
     }
 
     return this.state.results.length === 0 ? (

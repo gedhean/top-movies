@@ -4,6 +4,7 @@ import { Card, CardMedia, CardContent, Typography } from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import apiFetch from '../../api/fetch.js'
 import config from '../../config'
+import ResourceNotFound from '../../components/ResourceNotFound.js'
 
 const styles = {
   root: {
@@ -14,18 +15,32 @@ const styles = {
 }
 
 class Details extends Component {
-  state = {}
+  state = { error: '' }
 
   componentDidMount() {
     const { params } = this.props.match
-    apiFetch(`movie/${params.id}`).then(data => {
-      this.setState({ movie: data })
-    })
+    // Fetch movie details based on movie id
+    // May be it fail because the API has somes bugs 
+    apiFetch(`movie/${params.id}`)
+      .then(data => {
+        this.setState({ movie: data })
+      })
+      .catch(err => {
+        this.setState({ error: 'Failed to load resource. Sorry.' })
+        console.log('Details erro:', err)
+      })
   }
 
   render() {
     const { classes } = this.props
     const { movie } = this.state
+
+    // API failed
+    if (this.state.error) {
+      return (
+        <ResourceNotFound info={this.state.error}/>
+      )
+    }
 
     return movie ? (
       <div className={classes.root}>

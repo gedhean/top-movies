@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import { Grid } from '@material-ui/core'
-import { getMovies } from '../../api/fetch.js'
+import { getTopMovies } from '../../api/fetch.js'
 // import apiFetch from '../../api/fetch.js'
 import MovieList from '../../components/MovieList.js'
 
@@ -33,7 +32,7 @@ class Home extends Component {
 
   loadMoveis = page => {
     console.log('page:', page)
-    getMovies('trending/all/day', page).then(data => {
+    getTopMovies(page).then(data => {
       console.log(data)
       this.setState(prevState => ({
         movies: [...prevState.movies, ...data.results],

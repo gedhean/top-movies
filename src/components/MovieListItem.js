@@ -53,14 +53,17 @@ function MovieListItem(props) {
               <Typography gutterBottom variant="headline" component="h2">
                 {movie.title || movie.original_title || movie.originnal_name || movie.name}
               </Typography>
-              <Typography gutterBottom variant="body1" component="p">
-                {movie.overview}
+              <Typography color="textPrimary">
+                Popularity: {movie.popularity}
               </Typography>
+              {/* <Typography gutterBottom variant="body1" component="p">
+                {movie.overview}
+              </Typography> */}
               <Typography color="textSecondary">
                 Vote agerage: {movie.vote_average}
               </Typography>
               <Typography color="textSecondary">
-                Release date: {movie.release_date}
+                Release: {movie.release_date}
               </Typography>
             </Grid>
             {/* <Grid item>

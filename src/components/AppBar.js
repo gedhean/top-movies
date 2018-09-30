@@ -10,8 +10,8 @@ import { withStyles } from '@material-ui/core/styles'
 import HomeIcon from '@material-ui/icons/Home'
 import SearchIcon from '@material-ui/icons/Search'
 import ButtonBase from '@material-ui/core/ButtonBase'
-import { Link} from 'react-router-dom';
-import { Hidden } from '@material-ui/core';
+import { Link } from 'react-router-dom'
+import { Hidden } from '@material-ui/core'
 
 const styles = theme => ({
   root: {
@@ -73,6 +73,27 @@ const styles = theme => ({
   }
 })
 
+function handleSearch(event) {
+  event.persist()
+  if (event.key === 'Enter') {
+    window.location.pathname = `/search/${event.target.value}`
+  }
+}
+
+const debounce = (fn, timeWindow = 500) =>
+  (function() {
+    let timeout
+
+    return function() {
+      const context = this
+      const args = arguments
+      clearTimeout(timeout)
+      timeout = setTimeout(function() {
+        fn.apply(context, args)
+      }, timeWindow)
+    }
+  })()
+
 function SearchAppBar(props) {
   const { classes } = props
   return (
@@ -80,7 +101,13 @@ function SearchAppBar(props) {
       <AppBar position="fixed" color="primary">
         <Toolbar variant="dense">
           <Hidden smUp>
-            <IconButton to="/" className={classes.menuButton} color="inherit" aria-label="Open drawer" component={Link}>
+            <IconButton
+              to="/"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="Open drawer"
+              component={Link}
+            >
               <HomeIcon />
             </IconButton>
           </Hidden>
@@ -95,13 +122,7 @@ function SearchAppBar(props) {
               <SearchIcon />
             </div>
             <Input
-              onKeyDown={(e) => {
-                e.persist()
-                console.log(e, e.key === "Enter" && e.target.value);
-                if (e.key === "Enter") {
-                   window.location.pathname = `/search/${e.target.value}`
-                } 
-              }}
+              onKeyDown={debounce(handleSearch, 200)}
               name="search"
               autoComplete="off"
               placeholder="Search…"
