@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -10,7 +10,7 @@ import { withStyles } from '@material-ui/core/styles'
 import HomeIcon from '@material-ui/icons/Home'
 import SearchIcon from '@material-ui/icons/Search'
 import ButtonBase from '@material-ui/core/ButtonBase'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { Hidden } from '@material-ui/core'
 
 const styles = theme => ({
@@ -73,74 +73,89 @@ const styles = theme => ({
   }
 })
 
-function handleSearch(event) {
-  event.persist()
-  if (event.key === 'Enter') {
-    window.location.pathname = `/search/${event.target.value}`
+function debounce(func, wait, immediate) {
+  var timeout
+  return function() {
+    var context = this,
+      args = arguments
+    var later = function() {
+      timeout = null
+      if (!immediate) func.apply(context, args)
+    }
+    var callNow = immediate && !timeout
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+    if (callNow) func.apply(context, args)
   }
 }
 
-const debounce = (fn, timeWindow = 500) =>
-  (function() {
-    let timeout
+class SearchAppBar extends Component {
+  state = {
+    searchQuery: ''
+  }
+  
+  handleSearch = event => {
+    event.persist()
+    event.preventDefault()
+    this.props.history.push(`/search/${this.state.searchQuery}`)
+    this.setState({searchQuery: ''})
+  }
 
-    return function() {
-      const context = this
-      const args = arguments
-      clearTimeout(timeout)
-      timeout = setTimeout(function() {
-        fn.apply(context, args)
-      }, timeWindow)
-    }
-  })()
+  handleChange = event => {
+    this.setState({ searchQuery: event.target.value })
+  }
 
-function SearchAppBar(props) {
-  const { classes } = props
-  return (
-    <div className={classes.root}>
-      <AppBar position="fixed" color="primary">
-        <Toolbar variant="dense">
-          <Hidden smUp>
-            <IconButton
-              to="/"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="Open drawer"
-              component={Link}
-            >
-              <HomeIcon />
-            </IconButton>
-          </Hidden>
-          <ButtonBase to="/" component={Link}>
-            <Typography className={classes.title} variant="title" color="inherit" noWrap>
-              Top Movies
-            </Typography>
-          </ButtonBase>
-          <div className={classes.grow} />
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+  render() {
+    const { classes } = this.props
+    return (
+      <div className={classes.root}>
+        <AppBar position="fixed" color="primary">
+          <Toolbar variant="dense">
+            <Hidden smUp>
+              <IconButton
+                to="/"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="Open drawer"
+                component={Link}
+              >
+                <HomeIcon />
+              </IconButton>
+            </Hidden>
+            <ButtonBase to="/" component={Link}>
+              <Typography className={classes.title} variant="title" color="inherit" noWrap>
+                Top Movies
+              </Typography>
+            </ButtonBase>
+            <div className={classes.grow} />
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <form onSubmit={debounce(this.handleSearch, 500, true)}>
+                <Input
+                  onChange={this.handleChange}
+                  value={this.state.searchQuery}
+                  name="search"
+                  autoComplete="off"
+                  placeholder="Search…"
+                  disableUnderline
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput
+                  }}
+                />
+              </form>
             </div>
-            <Input
-              onKeyDown={debounce(handleSearch, 200)}
-              name="search"
-              autoComplete="off"
-              placeholder="Search…"
-              disableUnderline
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-            />
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
-  )
+          </Toolbar>
+        </AppBar>
+      </div>
+    )
+  }
 }
 
 SearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(SearchAppBar)
+export default withRouter(withStyles(styles)(SearchAppBar))

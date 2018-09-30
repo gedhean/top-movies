@@ -5,6 +5,7 @@ Axios.defaults.baseURL = process.env.REACT_APP_API_URL
 
 export async function getTopMovies(page) {
   const res = await Axios.get(`/movie/popular?api_key=${API_KEY}&page=${page}&region=brazil`)
+  console.log("Request remaining limit:",res.headers["x-ratelimit-remaining"]);
   return await res.data
 }
 
@@ -12,10 +13,12 @@ export async function searchMulti({ query, page = 1 }) {
   const res = await Axios.get(
     `search/multi?api_key=${API_KEY}&query=${query}&page=${page}`
   )
+  console.log("Request remaining limit:",res.headers["x-ratelimit-remaining"]);
   return await res.data
 }
 
 export default async resource => {
   const res = await Axios.get(`/${resource}?api_key=${API_KEY}`)
+  console.log("Request remaining limit:",res.headers["x-ratelimit-remaining"]);
   return await res.data
 }

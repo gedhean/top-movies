@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { searchMulti } from '../api/fetch.js'
 import MovieList from '../components/MovieList'
 import CircularLoading from '../components/CircularLoading.js'
-import ResourceNotFound from '../components/ResourceNotFound.js';
+import ResourceNotFound from '../components/ResourceNotFound.js'
 
 class SearchConainer extends Component {
   state = {
@@ -12,6 +12,14 @@ class SearchConainer extends Component {
   }
   componentDidMount() {
     this.loadSearch(1)
+  }
+
+  componentDidUpdate(prevProps) {
+    // Check for a new search
+    if (this.props.match.params !== prevProps.match.params) {
+      // reset the preview results and load new ones
+      this.setState({ results: [] }, () => this.loadSearch(1))
+    }
   }
 
   loadSearch = page => {
@@ -37,7 +45,7 @@ class SearchConainer extends Component {
 
   render() {
     if (this.state.noResults) {
-      return <ResourceNotFound info={this.state.error || "No results"} />
+      return <ResourceNotFound info={this.state.error || 'No results'} />
     }
 
     return this.state.results.length === 0 ? (
@@ -49,6 +57,7 @@ class SearchConainer extends Component {
         movies={this.state.results}
         loadMore={this.loadSearch}
         hasMore={this.state.hasMore}
+        extraInfo
       />
     )
   }

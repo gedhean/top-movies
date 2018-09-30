@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
@@ -11,17 +11,17 @@ import { Link } from 'react-router-dom'
 import config from '../config'
 import { Tooltip } from '@material-ui/core'
 import PreloadImage from '../components/PreloadImage.js'
+import placeholderImg from '../assets/img/movie-place.png';
+import MoviePopularity from '../components/MoviePopularity';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     maxWidth: 600,
-    padding: theme.spacing.unit * 2
+    padding: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit / 2
   },
-  image: {
-    width: 133,
-    height: 200
-  },
+  image: { width: 133, height: 200 },
   img: {
     margin: 'auto',
     display: 'block',
@@ -29,14 +29,16 @@ const styles = theme => ({
     maxHeight: '100%',
     width: '100%',
     height: '100%',
-    backgroundColor: '#666'
-  }
+    backgroundColor: '#666',
+    backgroundImage: `url(${placeholderImg})`
+  },
+  overview: { maxHeight: '100px', maxWidth: '280px', overflow: 'hidden', textOverflow: 'ellipsis' }
 })
 
 function MovieListItem(props) {
-  const { classes, movie } = props
+  const { classes, movie, extraInfo } = props
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} elevation={2}>
       <Grid container spacing={16}>
         <Grid item>
           <ButtonBase to={`/details/${movie.id}`} className={classes.image} component={Link}>
@@ -55,22 +57,22 @@ function MovieListItem(props) {
               <Typography gutterBottom variant="headline" component="h2">
                 {movie.title || movie.original_title || movie.originnal_name || movie.name}
               </Typography>
-              <Typography color="textPrimary">Popularity: {movie.popularity}</Typography>
-              {/* <Typography gutterBottom variant="body1" component="p">
-                {movie.overview}
-              </Typography> */}
-              <Typography color="textSecondary">Vote agerage: {movie.vote_average}</Typography>
-              <Typography color="textSecondary">Release: {movie.release_date}</Typography>
+              <MoviePopularity popularity={movie.popularity} votes={movie.vote_average}/>
+              {extraInfo ? (
+                <Fragment>
+                  <Typography
+                    className={classes.overview}
+                    gutterBottom
+                    variant="body1"
+                    component="p"
+                  >
+                    {movie.overview}
+                  </Typography>
+                  <Typography color="textSecondary">Release: {movie.release_date || "Unknown"}</Typography>
+                </Fragment>
+              ) : null}
             </Grid>
-            {/* <Grid item>
-              <Typography style={{ cursor: 'pointer' }}>Remove</Typography>
-            </Grid> */}
           </Grid>
-          {/* <Grid item>
-            <Typography variant="caption">
-              {movie.vote_average}{" "}
-            </Typography>
-          </Grid> */}
           <Grid item>
             <IconButton>
               <Tooltip title="Favorite" placement="top-start">

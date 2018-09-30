@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
-import { Card, CardMedia, CardContent, Typography } from '@material-ui/core'
+import { Card, CardMedia, CardContent, Typography, Grid } from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import apiFetch from '../../api/fetch.js'
 import config from '../../config'
 import ResourceNotFound from '../../components/ResourceNotFound.js'
+import MoviePopularity from '../../components/MoviePopularity';
 
 const styles = {
   root: {
@@ -20,10 +21,11 @@ class Details extends Component {
   componentDidMount() {
     const { params } = this.props.match
     // Fetch movie details based on movie id
-    // May be it fail because the API has somes bugs 
+    // May be it fail because the API has somes bugs
     apiFetch(`movie/${params.id}`)
       .then(data => {
         this.setState({ movie: data })
+        console.table(data)
       })
       .catch(err => {
         this.setState({ error: 'Failed to load resource. Sorry.' })
@@ -37,9 +39,7 @@ class Details extends Component {
 
     // API failed to found resource
     if (this.state.error) {
-      return (
-        <ResourceNotFound info={this.state.error}/>
-      )
+      return <ResourceNotFound info={this.state.error} />
     }
 
     return movie ? (
@@ -50,12 +50,20 @@ class Details extends Component {
             image={`${config.api.backdrop_base_url(1)}/${movie.backdrop_path}`}
           />
           <CardContent>
-            <Typography gutterBottom variant="headline" component="h2">
-              {movie.title || movie.original_title || movie.original_name || movie.name}
-            </Typography>
+            <Grid container justify="space-between">
+              <Grid item>
+                <Typography gutterBottom variant="headline" component="h2">
+                  {movie.title || movie.original_title || movie.original_name || movie.name}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <MoviePopularity popularity={movie.popularity} votes={movie.vote_average}/>
+              </Grid>
+            </Grid>
             <Typography component="p" variant="body1">
               {movie.overview}
             </Typography>
+            <Typography color="textSecondary" />
           </CardContent>
         </Card>
       </div>
