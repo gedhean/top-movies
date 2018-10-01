@@ -4,6 +4,8 @@ import DefaultLayout from '../views/Layout'
 import Details from '../views/Details'
 import { LinearProgress } from '@material-ui/core'
 import SearchConainer from '../containers/SearchConainer';
+import Favorites from '../containers/Favorites';
+import Login from '../containers/LoginContainer';
 
 const Loading = () => <LinearProgress color="secondary"/>
 // Loadable ta quenbrando na rota `/`
@@ -46,5 +48,17 @@ export default [
     exact: false,
     name: 'Search',
     component: SearchConainer
+  },
+  {
+    path: '/favorites',
+    exact: false,
+    name: 'Favorites',
+    component: Favorites
+  },
+  {
+    path: '/login',
+    exact: false,
+    name: 'Login',
+    component: Login
   }
 ]

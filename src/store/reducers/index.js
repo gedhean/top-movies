@@ -1,6 +1,8 @@
-import { combineReducers } from "redux";
-import favorites from './favorites.js';
+import { combineReducers } from 'redux'
+import favorites from './favorites.js'
+import auth from './auth.js'
 
-export default combineReducers(
-    favorites
-)
+export default combineReducers({
+  auth,
+  favorites
+})

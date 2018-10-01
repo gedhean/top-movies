@@ -1,12 +1,8 @@
-const favorites = (state, action) => {
-    switch (action.type) {
-        case 'value':
-            
-            break;
-    
-        default:
-            break;
-    }
+const favorites = (state = {}, action) => {
+  switch (action.type) {
+    default:
+      return state
+  }
 }
 
-export default favorites;
+export default favorites

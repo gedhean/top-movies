@@ -6,15 +6,20 @@ import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import Input from '@material-ui/core/Input'
 import { fade } from '@material-ui/core/styles/colorManipulator'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@material-ui/core/styles/withStyles'
 import HomeIcon from '@material-ui/icons/Home'
 import SearchIcon from '@material-ui/icons/Search'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import { Link, withRouter } from 'react-router-dom'
-import { Hidden } from '@material-ui/core'
+import Hidden from '@material-ui/core/Hidden'
+import FavoriteIcon from '@material-ui/icons/StarBorder'
+import LogoutIcon from '@material-ui/icons/ExitToApp'
 
-// import { auth } from '../firebase/init'
-import { auth } from '../api/fetch';
+import debounce from '../utils/debounce'
+import { connect } from 'react-redux'
+import firebase from '../firebase/init'
+import { login, logout } from '../store/reducers/auth'
+import { Tooltip } from '@material-ui/core'
 
 const styles = theme => ({
   root: {
@@ -74,28 +79,32 @@ const styles = theme => ({
       }
     }
   },
-  login: { padding: theme.spacing.unit, marginLeft: theme.spacing.unit * 2 }
+  icon: { marginLeft: theme.spacing.unit }
 })
 
-function debounce(func, wait, immediate) {
-  var timeout
-  return function() {
-    var context = this,
-      args = arguments
-    var later = function() {
-      timeout = null
-      if (!immediate) func.apply(context, args)
-    }
-    var callNow = immediate && !timeout
-    clearTimeout(timeout)
-    timeout = setTimeout(later, wait)
-    if (callNow) func.apply(context, args)
-  }
-}
-
+// AppBar container
 class SearchAppBar extends Component {
   state = {
     searchQuery: ''
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    // Access user data
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const userData = {
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+          photoUrl: user.photoURL
+        }
+        dispatch(login(userData))
+        console.log('User:', user)
+      } else {
+        console.log('Não há usuário logado')
+      }
+    })
   }
 
   handleSearch = event => {
@@ -109,8 +118,19 @@ class SearchAppBar extends Component {
     this.setState({ searchQuery: event.target.value })
   }
 
+  handleLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        console.log('Logout successful')
+        this.props.dispatch(logout())
+      })
+      .catch(err => console.log('Logout erro:', err))
+  }
+
   render() {
-    const { classes } = this.props
+    const { classes, authenticated } = this.props
     return (
       <div className={classes.root}>
         <AppBar position="fixed" color="primary">
@@ -121,8 +141,7 @@ class SearchAppBar extends Component {
                 className={classes.menuButton}
                 color="inherit"
                 aria-label="Open drawer"
-                component={Link}
-              >
+                component={Link}>
                 <HomeIcon />
               </IconButton>
             </Hidden>
@@ -151,8 +170,23 @@ class SearchAppBar extends Component {
                 />
               </form>
             </div>
-            <div className={classes.login}>
-              <ButtonBase onClick={auth}>LOGIN</ButtonBase>
+            <div className={classes.icon}>
+              <IconButton to="/favorites" component={Link}>
+                <FavoriteIcon style={{ color: '#FFF' }} />
+              </IconButton>
+            </div>
+            <div className={classes.icon}>
+              {authenticated ? (
+                <IconButton onClick={this.handleLogout}>
+                  <Tooltip title="Logout">
+                    <LogoutIcon style={{ color: '#FFF' }} />
+                  </Tooltip>
+                </IconButton>
+              ) : (
+                <ButtonBase to="/login" component={Link}>
+                  LOGIN
+                </ButtonBase>
+              )}
             </div>
           </Toolbar>
         </AppBar>
@@ -162,7 +196,14 @@ class SearchAppBar extends Component {
 }
 
 SearchAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  authenticated: PropTypes.bool.isRequired
 }
 
-export default withRouter(withStyles(styles)(SearchAppBar))
+function mapStateToProps(state) {
+  return {
+    authenticated: state.auth.authenticated
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(SearchAppBar)))

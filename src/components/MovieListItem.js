@@ -13,6 +13,7 @@ import { Tooltip } from '@material-ui/core'
 import PreloadImage from '../components/PreloadImage.js'
 import placeholderImg from '../assets/img/movie-place.png'
 import MoviePopularity from '../components/MoviePopularity'
+import { addFavorite } from '../firebase/init'
 
 const styles = theme => ({
   root: {
@@ -64,8 +65,7 @@ function MovieListItem(props) {
                     className={classes.overview}
                     gutterBottom
                     variant="body1"
-                    component="p"
-                  >
+                    component="p">
                     {movie.overview}
                   </Typography>
                   <Typography color="textSecondary">
@@ -78,32 +78,21 @@ function MovieListItem(props) {
           <Grid item>
             <IconButton
               onClick={() => {
-                fetch(
-                  `https://api.themoviedb.org/3/account/{account_id}/favorite?api_key=99aed081ec73c95f4ad0fde1442f054f&session_id=${window.localStorage.getItem(
-                    'session_id'
-                  )}`,
-                  {
-                    headers: {
-                      'Content-Type': 'application/json;charset=utf-8'
-                    },
-                    method: 'post',
-                    body: JSON.stringify({
-                      media_type: 'movie',
-                      media_id: movie.id,
-                      favorite: true
-                    })
-                  }
-                )
-                  .then(res => res.json())
-                  .then(data => {
-                    console.log(data)
-                    // TODO: implementar lógica para indicar que o filme foi favoritado
-                  })
-                  .catch(err => console.log(err))
-              }}
-            >
+                // Salva no firebase
+                if (addFavorite(123, movie)) {
+                  console.log(
+                    'Added to favorites:',
+                    movie.title || movie.original_title || movie.originnal_name || movie.name
+                  )
+                } else {
+                  console.log(
+                    'Failed to add favorites:',
+                    movie.title || movie.original_title || movie.originnal_name || movie.name
+                  )
+                }
+              }}>
               <Tooltip title="Favorite" placement="top-start">
-                <StarBorderIcon style={{ fontSize: 16 }} />
+                <StarBorderIcon style={{ fontSize: 18 }} />
               </Tooltip>
             </IconButton>
           </Grid>
