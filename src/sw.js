@@ -14,9 +14,11 @@ const DAY_UNIT = 24 * 60 * 60
 // app-shell
 workbox.routing.registerRoute('/home', workbox.strategies.cacheFirst())
 // New route for images cache
+// /.*\.(?:png|jpg|jpeg|svg|gif)/g,
+//new RegExp('\.(?:png|gif|jpg|jpeg|svg)$'),
+const imageRegEx = /(?:https:\/\/.*)?.*\.(?:png|jpg|jpeg|svg|gif)$/g
 workbox.routing.registerRoute(
-  // /.*\.(?:png|jpg|jpeg|svg|gif)/g,
-  new RegExp('\.(?:png|gif|jpg|jpeg|svg)$'),
+  imageRegEx,
   workbox.strategies.cacheFirst({
     // Must user cache name when using expiration
     cacheName: 'image-cache',
