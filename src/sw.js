@@ -8,4 +8,11 @@ self.addEventListener('activate', event => event.waitUntil(self.clients.claim())
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
 // app-shell
-workbox.routing.registerRoute("/", workbox.strategies.networkFirst());
+workbox.routing.registerRoute("/home", workbox.strategies.cacheFirst());
+// New route for images cache
+workbox.routing.registerRoute(
+  /.*\.(?:png|jpg|jpeg|svg|gif)/g,
+  new workbox.strategies.CacheFirst({
+    cacheName: 'my-image-cache',
+  })
+);
