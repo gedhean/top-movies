@@ -15,11 +15,11 @@ workbox.routing.registerRoute('/home', workbox.strategies.cacheFirst())
 workbox.routing.registerRoute(
   /.*\.(?:png|jpg|jpeg|svg|gif)/g,
   workbox.strategies.cacheFirst({
-    cacheName: 'my-image-cache',
+    cacheName: 'image-cache',
     plugins: [
       new workbox.expiration.Plugin({
-        maxEntries: 100,
-        maxAgeSeconds: 30 * 24 * 60 * 60 // 30 Days
+        maxEntries: 50,
+        maxAgeSeconds: 10 * 24 * 60 * 60 // 10 Days
       }),
       // Needed to cache opaque response (third party)
       new workbox.cacheableResponse.Plugin({
