@@ -18,7 +18,7 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest)
 // 1 day in seconds
 const DAY_UNIT = 24 * 60 * 60
 // app-shell
-workbox.routing.registerRoute('/home', workbox.strategies.cacheFirst())
+// workbox.routing.registerRoute('/home', workbox.strategies.cacheFirst())
 // New route for images cache
 // /.*\.(?:png|jpg|jpeg|svg|gif)/g,
 //new RegExp('\.(?:png|gif|jpg|jpeg|svg)$'),
@@ -82,29 +82,21 @@ workbox.routing.registerRoute(
   })
 )
 // const searchHandle = workbox.strategies.cacheFirst({
-//   cacheName: 'search-cache',
-//   plugins: [
-//     new workbox.expiration.Plugin({
-//       maxEntries: 50,
-//       maxAgeSeconds: 10 * 24 * 60 * 60 // 30 Days
-//     }),
-//     // Needed to cache opaque response (third party)
-//     new workbox.cacheableResponse.Plugin({
-//       statuses: [0, 200]
-//     })
-//   ]
+//   cacheName: 'routes-cache'
 // })
-
-// workbox.routing.registerRoute(/\/search\/multi/g, args => {
+// // Custom handle
+// workbox.routing.registerRoute(thepMovieDBRegEx, args => {
 //   return searchHandle
 //     .handle(args)
 //     .then(response => {
 //       if (response.status === 404) {
+//         console.log('Page not found!');
 //         return caches.match('pages/404.html') // custom page
 //       }
 //       return response
 //     })
 //     .catch(() => {
+//       console.log('You are offline');
 //       return caches.match('pages/offline.html')
 //     })
 // })

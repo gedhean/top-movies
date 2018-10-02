@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+
 import Login from '../views/Login'
 import firebase from '../firebase/init'
 import { login } from '../store/reducers/auth'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 
 class LoginContainer extends Component {
   componentDidMount() {
@@ -34,6 +35,7 @@ class LoginContainer extends Component {
     console.log('Hi from login Container')
   }
   // Login using GitHub provider
+  // TODO: add others providers
   handleGitHubLogin = () => {
     const provider = new firebase.auth.GithubAuthProvider()
     firebase.auth().signInWithRedirect(provider)

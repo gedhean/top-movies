@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
 import { getTopMovies } from '../../api/fetch.js'
+import { withStyles } from '@material-ui/core/styles'
 import MovieList from '../../components/MovieList.js'
+
 const styles = {
   root: {
     flexGrow: 1

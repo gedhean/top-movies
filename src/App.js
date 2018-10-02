@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import CssBaseline from '@material-ui/core/CssBaseline'
+
 import store from './store/configuredStore'
 import DefaultLayout from './views/DefaultLayout'
 
@@ -21,5 +22,5 @@ class App extends Component {
     )
   }
 }
-console.log(process.env)
+
 export default App

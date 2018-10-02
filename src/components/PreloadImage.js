@@ -1,4 +1,6 @@
 // Source: https://github.com/sconstantinides/react-preload-image/blob/master/src/index.js
+// I did some changes because it was broking up the whole app
+// TODO: pull request to contribute
 import React from 'react';
 
 class PreloadImage extends React.Component {

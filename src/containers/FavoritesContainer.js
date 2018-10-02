@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import LinearProgress from '@material-ui/core/LinearProgress'
+
 import firebase from '../firebase/init'
 import Favorites from '../views/Favorites'
-import { connect } from 'react-redux'
-import ResourceNotFound from '../components/ResourceNotFound'
 import { newFeedback } from '../store/reducers/feedback'
 import { setFavorites } from '../store/reducers/favorites'
+import ResourceNotFound from '../components/ResourceNotFound'
 
 class FavoritesContainer extends Component {
   state = {
@@ -14,7 +15,6 @@ class FavoritesContainer extends Component {
     noContent: false // The current user do not have favorites
   }
   componentDidMount() {
-    // const { userId } = this.props
     // Read favorites for the logged user
     firebase.auth().onAuthStateChanged(user => {
       if (user) {

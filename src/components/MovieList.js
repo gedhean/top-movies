@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import GridList from '@material-ui/core/GridList'
-import { withStyles } from '@material-ui/core/styles'
 import InfiniteScroller from 'react-infinite-scroller'
+import withStyles from '@material-ui/core/styles/withStyles'
 
-import CircularLoading from '../components/CircularLoading.js'
 import MovieListItem from './MovieListItem'
+import CircularLoading from '../components/CircularLoading.js'
 
 const styles = theme => ({
   root: {
@@ -35,7 +35,6 @@ function InfiniteScrollList(props) {
           pageStart={1}
           loadMore={loadMore}
           hasMore={hasMore}
-          // useWindow={false}
         >
           <GridList className={classes.gridList}>
             {movies.map(movie => (

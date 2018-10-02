@@ -1,25 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import Input from '@material-ui/core/Input'
 import AppBar from '@material-ui/core/AppBar'
+import Hidden from '@material-ui/core/Hidden'
 import Toolbar from '@material-ui/core/Toolbar'
+import Tooltip from '@material-ui/core/Tooltip'
+import ButtonBase from '@material-ui/core/ButtonBase'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import Input from '@material-ui/core/Input'
-import { fade } from '@material-ui/core/styles/colorManipulator'
 import withStyles from '@material-ui/core/styles/withStyles'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 import HomeIcon from '@material-ui/icons/Home'
-import SearchIcon from '@material-ui/icons/Search'
-import ButtonBase from '@material-ui/core/ButtonBase'
-import { Link, withRouter } from 'react-router-dom'
-import Hidden from '@material-ui/core/Hidden'
 import FavoriteIcon from '@material-ui/icons/Star'
+import SearchIcon from '@material-ui/icons/Search'
 import LogoutIcon from '@material-ui/icons/ExitToApp'
+import { Link, withRouter } from 'react-router-dom'
 
 import debounce from '../utils/debounce'
-import { connect } from 'react-redux'
 import firebase from '../firebase/init'
 import { login, logout } from '../store/reducers/auth'
-import { Tooltip } from '@material-ui/core'
 import { newFeedback } from '../store/reducers/feedback'
 
 const styles = theme => ({
@@ -102,7 +102,7 @@ class SearchAppBar extends Component {
           photoUrl: user.photoURL
         }
         dispatch(login(userData))
-        console.log('User logged:', user)
+        console.log('User logged:', user.displayName)
       } else {
         console.log('Não há usuário logado')
       }

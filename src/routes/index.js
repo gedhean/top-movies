@@ -1,28 +1,19 @@
 import React from 'react'
 import Loadable from 'react-loadable'
-import DefaultLayout from '../views/DefaultLayout'
-import Details from '../views/Details'
-import { LinearProgress } from '@material-ui/core'
-import SearchConainer from '../containers/SearchConainer';
-import FavoritesContainer from '../containers/FavoritesContainer';
-import LoginContainer from '../containers/LoginContainer';
+import LinearProgress from '@material-ui/core/LinearProgress'
 
-const Loading = () => <LinearProgress color="secondary"/>
-// Loadable ta quenbrando na rota `/`
-// const DefaultLayout = Loadable({
-//   loader: () => import('../views/Layout.js'),
-//   loading: Loading
-// })
+import Details from '../views/Details'
+import DefaultLayout from '../views/DefaultLayout'
+import SearchConainer from '../containers/SearchConainer'
+import LoginContainer from '../containers/LoginContainer'
+import FavoritesContainer from '../containers/FavoritesContainer'
+
+const Loading = () => <LinearProgress color="secondary" />
 
 const Home = Loadable({
   loader: () => import('../views/Home'),
   loading: Loading
 })
-
-// const Details = Loadable({
-//   loader: () => import('../views/Details'),
-//   loading: Loading
-// })
 
 export default [
   {

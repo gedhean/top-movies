@@ -11,12 +11,13 @@ import IconButton from '@material-ui/core/IconButton'
 import FavoriteIcon from '@material-ui/icons/StarBorder'
 import FavotiteCheckedIcon from '@material-ui/icons/Star'
 import withStyles from '@material-ui/core/styles/withStyles'
+
 import config from '../config'
+import firebase from '../firebase/init'
+import { newFeedback } from '../store/reducers/feedback'
 import PreloadImage from '../components/PreloadImage.js'
 import placeholderImg from '../assets/img/movie-place.png'
 import MoviePopularity from '../components/MoviePopularity'
-import { newFeedback } from '../store/reducers/feedback'
-import firebase from '../firebase/init'
 import { addFavorite, removeFavorite } from '../store/reducers/favorites'
 
 const styles = theme => ({
@@ -44,6 +45,7 @@ function MovieListItem(props) {
   const { classes, movie, extraInfo, favorite, authenticated, userId, dispatch } = props
   const movie_name = movie.title || movie.original_title || movie.originnal_name || movie.name
   const isFavorite = props.favoritesIds.includes(movie.id)
+  
   return (
     <Paper className={classes.root} elevation={2}>
       <Grid container spacing={16}>

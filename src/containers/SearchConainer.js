@@ -38,7 +38,7 @@ class SearchConainer extends Component {
         console.log(data)
       })
       .catch(err => {
-        this.setState({ error: 'Resource could not be found. Sorry.' })
+        this.setState({ error: 'Resource could not be found. Sorry.', noResults: true })
         console.log('Search erro:', err)
       })
   }

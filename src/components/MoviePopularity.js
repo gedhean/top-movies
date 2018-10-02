@@ -1,17 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Typography from '@material-ui/core/Typography'
+import withStyles from '@material-ui/core/styles/withStyles'
 import ThumbIcon from '@material-ui/icons/ThumbUpAltRounded'
 import SatisfiedIcon from '@material-ui/icons/SentimentSatisfiedAlt'
-import withStyles from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
 
 const styles = {
-  typo: { display: 'inline-flex', alignItems: 'center', marginRight: '12px' },
   icon: { fontSize: '20px', color: '#04C754' },
-  number: { display: 'inline-bock', fontWeight: '500' }
+  number: { display: 'inline-bock', fontWeight: '500' },
+  typo: { display: 'inline-flex', alignItems: 'center', marginRight: '12px' }
 }
 
-const MoviePopularity = ({popularity, votes, classes, ...rest}) => {
+const MoviePopularity = ({ popularity, votes, classes, ...rest }) => {
   return (
     <div {...rest}>
       <Typography title="Popularity" color="textPrimary" className={classes.typo}>

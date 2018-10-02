@@ -1,7 +1,11 @@
 import React from 'react'
-import withStyles from '@material-ui/core/styles/withStyles'
-import { Grid, Paper, Typography, Divider, Button } from '@material-ui/core'
 import PropTypes from 'prop-types'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button'
+import Divider from '@material-ui/core/Divider'
+import Typography from '@material-ui/core/Typography'
+import withStyles from '@material-ui/core/styles/withStyles'
 
 const styles = theme => ({
   root: {
@@ -12,7 +16,7 @@ const styles = theme => ({
   },
   paper: {
     minWidth: 330,
-    height: 200,
+    height: 200
     // padding: `0px ${theme.spacing.unit * 3}px`
   },
   paperHeader: {

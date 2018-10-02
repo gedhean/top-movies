@@ -11,6 +11,7 @@ const config = {
 }
 
 export default config
+
 // backdrop_sizes: (4) ["w300", "w780", "w1280", "original"]
 // base_url: "http://image.tmdb.org/t/p/"
 // logo_sizes: Array(7)

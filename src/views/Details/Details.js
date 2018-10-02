@@ -6,12 +6,13 @@ import Typography from '@material-ui/core/Typography'
 import CardContent from '@material-ui/core/CardContent'
 import withStyles from '@material-ui/core/styles/withStyles'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import MoneyIcon from '@material-ui/icons/AttachMoney'
 import TimeIcon from '@material-ui/icons/AccessTime'
+import MoneyIcon from '@material-ui/icons/AttachMoney'
 import config from '../../config'
+
 import apiFetch from '../../api/fetch.js'
-import ResourceNotFound from '../../components/ResourceNotFound.js'
 import MoviePopularity from '../../components/MoviePopularity'
+import ResourceNotFound from '../../components/ResourceNotFound.js'
 
 const styles = {
   root: {
@@ -19,8 +20,8 @@ const styles = {
     margin: '0px auto',
     paddingTop: '16px'
   },
-  item: { display: 'inline-flex', alignItems: 'center', marginRight: '12px' },
-  icon: { fontSize: '18px' }
+  icon: { fontSize: '18px' },
+  item: { display: 'inline-flex', alignItems: 'center', marginRight: '12px' }
 }
 
 class Details extends Component {
@@ -41,7 +42,11 @@ class Details extends Component {
       })
   }
 
-  formateNum = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', currencyDisplay: "code" }).format
+  formateNum = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    currencyDisplay: 'code'
+  }).format
 
   render() {
     const { classes } = this.props
@@ -55,10 +60,12 @@ class Details extends Component {
     return movie ? (
       <div className={classes.root}>
         <Card>
-          <CardMedia
-            component="img"
-            image={`${config.api.backdrop_base_url(1)}/${movie.backdrop_path}`}
-          />
+          {movie.backdrop_path && (
+            <CardMedia
+              component="img"
+              image={`${config.api.backdrop_base_url(1)}/${movie.backdrop_path}`}
+            />
+          )}
           <CardContent>
             <Grid container justify="space-between">
               <Grid item>
