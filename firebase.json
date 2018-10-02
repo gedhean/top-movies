@@ -3,7 +3,6 @@
     "public": "build",
     "ignore": [
       "firebase.json",
-      "**/*.map",
       "**/node_modules/**"
     ],
     "rewrites": [
