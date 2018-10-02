@@ -1,6 +1,6 @@
 // API CONFIG
 export const IMG_BASE_URL = 'http://image.tmdb.org/t/p/'
-export const IMG_SEC_BASE_URL = 'https://image.tmdb.org/t/p/'
+export const IMG_BASE_URL_SEC = 'https://image.tmdb.org/t/p/'
 export const IMG_BACKDROP_SIZE = ['w300', 'w780', 'w1280', 'original']
 export const IMG_POST_SIZE = [
   'w92',
@@ -13,7 +13,7 @@ export const IMG_POST_SIZE = [
 ]
 const config = {
   api: {
-    post_base_url: (size = 1) => `${IMG_BASE_URL}/${IMG_POST_SIZE[size]}`,
+    post_base_url: (size = 1) => `${IMG_BASE_URL_SEC}/${IMG_POST_SIZE[size]}`,
     backdrop_base_url: (size = 1) =>
       `${IMG_BASE_URL}/${IMG_BACKDROP_SIZE[size]}`
   }
