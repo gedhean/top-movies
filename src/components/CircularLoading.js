@@ -4,8 +4,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const styles = {
     display: 'flex',
     justifyContent: 'center',
-    width: '100%',
-    margin: '24px 0px',
+    width: '100vw',
+    padding: '24px 0px',
     textAlign: 'center'
 }
 

@@ -19,7 +19,7 @@ const auth = (state = INIT_STATE, action) => {
     case 'LOGIN':
       return { ...state, authenticated: true, userData: action.payload }
     case 'LOGOUT':
-      return { ...state, authenticated: false, userData: {} }
+      return { authenticated: false, userData: {} }
     default:
       return state
   }

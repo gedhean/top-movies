@@ -3,7 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './store/configuredStore'
-import DefaultLayout from './views/Layout'
+import DefaultLayout from './views/DefaultLayout'
 
 class App extends Component {
   render() {

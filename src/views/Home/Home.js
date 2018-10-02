@@ -43,7 +43,7 @@ class Home extends Component {
 
     return (
       <div className={classes.container}>
-        <MovieList movies={movies} loadMore={this.loadMoveis} hasMore={hasMore} />
+        <MovieList movies={movies} loadMore={this.loadMoveis} hasMore={hasMore} favorite />
       </div>
     )
   }

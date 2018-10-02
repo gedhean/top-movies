@@ -1,29 +1,31 @@
 import React from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { Grid, Paper, Typography, Divider, Button } from '@material-ui/core'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const styles = theme => ({
   root: {
     maxWidth: '560px',
     margin: '0px auto',
-    height: '90vh',
+    height: '80vh',
     paddingTop: theme.spacing.unit * 2
   },
   paper: {
     minWidth: 330,
-    height: 300,
-    padding: `0px ${theme.spacing.unit * 3}px`
+    height: 200,
+    // padding: `0px ${theme.spacing.unit * 3}px`
   },
   paperHeader: {
     padding: `${theme.spacing.unit * 2}px 0px`,
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: theme.palette.primary.main,
+    color: '#FFF'
   },
   paperBody: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '80%'
+    height: '68%'
   },
   loginBtn: {
     color: '#FFF',
@@ -41,7 +43,7 @@ const Login = props => {
       <Grid item>
         <Paper className={classes.paper}>
           <div className={classes.paperHeader}>
-            <Typography component="h1" variant="headline" color="textPrimary">
+            <Typography component="h1" variant="headline" color="inherit">
               Login
             </Typography>
           </div>
@@ -51,7 +53,8 @@ const Login = props => {
               onClick={onGitHubClick}
               className={classes.loginBtn}
               variant="contained"
-              color="primary">
+              color="primary"
+            >
               Login with GitHub
             </Button>
           </div>

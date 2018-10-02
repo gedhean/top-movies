@@ -21,11 +21,11 @@ const styles = theme => ({
     height: 'auto',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)'
-  },
+  }
 })
 
-function AdvancedGridList(props) {
-  const { classes, movies, loadMore, hasMore, extraInfo } = props
+function InfiniteScrollList(props) {
+  const { classes, movies, loadMore, hasMore, extraInfo, favorite } = props
 
   return (
     <div className={classes.root}>
@@ -36,9 +36,14 @@ function AdvancedGridList(props) {
           hasMore={hasMore}
           // useWindow={false}
         >
-          <GridList cellHeight={200} spacing={2} className={classes.gridList}>
+          <GridList className={classes.gridList}>
             {movies.map(movie => (
-              <MovieListItem key={movie.id} movie={movie} extraInfo={extraInfo}/>
+              <MovieListItem
+                key={movie.id}
+                movie={movie}
+                extraInfo={extraInfo}
+                favorite={favorite}
+              />
             ))}
           </GridList>
         </InfiniteScroller>
@@ -49,14 +54,14 @@ function AdvancedGridList(props) {
   )
 }
 
-AdvancedGridList.propTypes = {
+InfiniteScrollList.propTypes = {
   classes: PropTypes.object.isRequired,
   movies: PropTypes.array.isRequired,
   loadMore: PropTypes.func.isRequired,
   hasMore: PropTypes.bool.isRequired
 }
 
-export default withStyles(styles)(AdvancedGridList)
+export default withStyles(styles)(InfiniteScrollList)
 
 /**
  * The example data is structured as follows:

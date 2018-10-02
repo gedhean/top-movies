@@ -12,7 +12,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import { Link, withRouter } from 'react-router-dom'
 import Hidden from '@material-ui/core/Hidden'
-import FavoriteIcon from '@material-ui/icons/StarBorder'
+import FavoriteIcon from '@material-ui/icons/Star'
 import LogoutIcon from '@material-ui/icons/ExitToApp'
 
 import debounce from '../utils/debounce'
@@ -20,6 +20,7 @@ import { connect } from 'react-redux'
 import firebase from '../firebase/init'
 import { login, logout } from '../store/reducers/auth'
 import { Tooltip } from '@material-ui/core'
+import { newFeedback } from '../store/reducers/feedback'
 
 const styles = theme => ({
   root: {
@@ -100,7 +101,7 @@ class SearchAppBar extends Component {
           photoUrl: user.photoURL
         }
         dispatch(login(userData))
-        console.log('User:', user)
+        console.log('User logged:', user)
       } else {
         console.log('Não há usuário logado')
       }
@@ -125,8 +126,14 @@ class SearchAppBar extends Component {
       .then(() => {
         console.log('Logout successful')
         this.props.dispatch(logout())
+        this.props.dispatch(newFeedback({ variant: 'success', message: 'Logout success. Bye o/' }))
       })
-      .catch(err => console.log('Logout erro:', err))
+      .catch(err => {
+        console.log('Logout erro:', err)
+        this.props.dispatch(
+          newFeedback({ variant: 'error', message: 'Logout failed. Try again please.' })
+        )
+      })
   }
 
   render() {
@@ -141,7 +148,8 @@ class SearchAppBar extends Component {
                 className={classes.menuButton}
                 color="inherit"
                 aria-label="Open drawer"
-                component={Link}>
+                component={Link}
+              >
                 <HomeIcon />
               </IconButton>
             </Hidden>
@@ -170,12 +178,17 @@ class SearchAppBar extends Component {
                 />
               </form>
             </div>
-            <div className={classes.icon}>
-              <IconButton to="/favorites" component={Link}>
-                <FavoriteIcon style={{ color: '#FFF' }} />
-              </IconButton>
-            </div>
-            <div className={classes.icon}>
+
+            {authenticated ? (
+              <div className={classes.icon}>
+                <IconButton to="/favorites" component={Link}>
+                  <Tooltip title="Favorites">
+                    <FavoriteIcon style={{ color: '#FFF' }} />
+                  </Tooltip>
+                </IconButton>
+              </div>
+            ) : null}
+            <div>
               {authenticated ? (
                 <IconButton onClick={this.handleLogout}>
                   <Tooltip title="Logout">
@@ -183,7 +196,7 @@ class SearchAppBar extends Component {
                   </Tooltip>
                 </IconButton>
               ) : (
-                <ButtonBase to="/login" component={Link}>
+                <ButtonBase to="/login" component={Link} style={{padding: '8px 8px 8px 16px'}}>
                   LOGIN
                 </ButtonBase>
               )}

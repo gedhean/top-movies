@@ -58,6 +58,7 @@ class SearchConainer extends Component {
         loadMore={this.loadSearch}
         hasMore={this.state.hasMore}
         extraInfo
+        favorite
       />
     )
   }

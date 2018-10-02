@@ -1,11 +1,11 @@
 import React from 'react'
 import Loadable from 'react-loadable'
-import DefaultLayout from '../views/Layout'
+import DefaultLayout from '../views/DefaultLayout'
 import Details from '../views/Details'
 import { LinearProgress } from '@material-ui/core'
 import SearchConainer from '../containers/SearchConainer';
-import Favorites from '../containers/Favorites';
-import Login from '../containers/LoginContainer';
+import FavoritesContainer from '../containers/FavoritesContainer';
+import LoginContainer from '../containers/LoginContainer';
 
 const Loading = () => <LinearProgress color="secondary"/>
 // Loadable ta quenbrando na rota `/`
@@ -53,12 +53,12 @@ export default [
     path: '/favorites',
     exact: false,
     name: 'Favorites',
-    component: Favorites
+    component: FavoritesContainer
   },
   {
     path: '/login',
     exact: false,
     name: 'Login',
-    component: Login
+    component: LoginContainer
   }
 ]
