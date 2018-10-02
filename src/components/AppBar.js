@@ -80,7 +80,8 @@ const styles = theme => ({
       }
     }
   },
-  icon: { marginLeft: theme.spacing.unit }
+  icon: { marginLeft: theme.spacing.unit },
+  homeBtn: { padding: theme.spacing.unit }
 })
 
 // AppBar container
@@ -153,7 +154,7 @@ class SearchAppBar extends Component {
                 <HomeIcon />
               </IconButton>
             </Hidden>
-            <ButtonBase to="/" component={Link}>
+            <ButtonBase to="/" component={Link} className={classes.homeBtn}>
               <Typography className={classes.title} variant="title" color="inherit" noWrap>
                 Top Movies
               </Typography>
@@ -196,7 +197,7 @@ class SearchAppBar extends Component {
                   </Tooltip>
                 </IconButton>
               ) : (
-                <ButtonBase to="/login" component={Link} style={{padding: '8px 8px 8px 16px'}}>
+                <ButtonBase to="/login" component={Link} style={{ padding: '8px 8px 8px 16px' }}>
                   LOGIN
                 </ButtonBase>
               )}
